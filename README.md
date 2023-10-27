@@ -70,3 +70,35 @@ The number of pages you need for an online exam platform can vary depending on t
     - Custom error pages for 404 (Not Found) and other common HTTP errors.
 
 Keep in mind that this list represents a basic set of pages. Depending on your specific requirements and the features you want to offer, you may need more pages or additional components. Your platform's design and user experience are also important factors to consider when determining the number of pages and how they're organized.
+
+```
+exam-frontend/
+    ├── public/
+    |   ├── index.html
+    |   ├── manifest.json
+    |   └── other static assets
+    ├── src/
+    |   ├── components/
+    |   |   ├── Home.js
+    |   |   ├── UserRegistration.js
+    |   |   ├── UserLogin.js
+    |   |   ├── UserDashboard.js
+    |   |   ├── ExamList.js
+    |   |   ├── ExamInstructions.js
+    |   |   ├── ExamTaking.js
+    |   |   ├── ExamReview.js
+    |   |   ├── UserProfile.js
+    |   |   ├── AdminPanel.js
+    |   |   ├── Result.js
+    |   |   └── other components
+    |   ├── App.js
+    |   ├── index.js
+    |   └── other application-specific files
+    ├── package.json
+    ├── package-lock.json
+    ├── README.md
+    ├── .gitignore
+    ├── public/
+    ├── src/
+    └── other Create React App-generated files
+```
