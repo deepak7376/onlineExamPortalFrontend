@@ -13,19 +13,19 @@ function NavigationBar() {
   return (
     <Navbar bg="body-tertiary" expand="lg">
       <Container>
-        <Navbar.Brand href="/">Navbar</Navbar.Brand>
+        <Navbar.Brand href="/">Home</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarSupportedContent" />
         <Navbar.Collapse id="navbarSupportedContent">
           <Nav className="me-auto">
             <Nav.Link href="/explore">Explore</Nav.Link>
-            <Nav.Link href="#">Link</Nav.Link>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+            <Nav.Link href="#">Problems</Nav.Link>
+            <NavDropdown title="Interview" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.3">Something else here</NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link disabled>Disabled</Nav.Link>
+            <Nav.Link href="#">Discuss</Nav.Link>
           </Nav>
           <Form className="d-flex">
             <FormControl type="search" placeholder="Search" aria-label="Search" />

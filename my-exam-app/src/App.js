@@ -5,6 +5,7 @@ import SignUp from './components/SignUp';
 import Login from './components/Login';
 import Home from './components/Home';
 import Explore from './components/Explore';
+import ExamPage from './components/ExamPage';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/explore" element={<Explore />} />
+          <Route path="/explore/exam/:examId" element={<ExamPage />} /> {/* Dynamic route for the exam page */}
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
           {/* Other routes */}

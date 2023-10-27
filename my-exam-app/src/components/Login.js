@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import NavigationBar from './NavigationBar'; // Import the NavigationBar component
+import Layout from './Layout';
+
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -24,8 +25,8 @@ function Login() {
   };
 
   return (
-    <div>
-      <NavigationBar /> 
+    <Layout>
+      <div>
       <h1>Login</h1>
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3">
@@ -55,6 +56,8 @@ function Login() {
         </Button>
       </Form>
     </div>
+    </Layout>
+    
   );
 }
 
