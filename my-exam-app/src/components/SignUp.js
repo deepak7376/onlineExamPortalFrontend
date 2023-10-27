@@ -28,7 +28,7 @@ function Signup() {
   return (
     <Layout>
       <div>
-      <h1>Signup</h1>
+      <h3 style={{ marginTop: '40px', marginBottom: '30px'}}>SignUp</h3> {/* Add margin-top */}
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3">
           <Form.Label>Name</Form.Label>

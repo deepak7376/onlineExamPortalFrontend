@@ -20,7 +20,7 @@ function Explore() {
     <Layout>
       <div>
       <div className="container">
-        <h3>Welcome to Online Exam Explore Page</h3>
+      <h3 style={{ marginTop: '40px', marginBottom: '30px'}}>Welcome to Online Exam Explore Page</h3> {/* Add margin-top */}
         <div className="row">
           {exams.map((exam) => (
             <div className="col-md-4" key={exam.id}>
