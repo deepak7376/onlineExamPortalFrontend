@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Layout from './Layout';
-
+import Card from 'react-bootstrap/Card';
 
 function ExamPage() {
-  const { examId } = useParams(); // Get the examId from the route parameters
+  const { examId } = useParams();
   const [questions, setQuestions] = useState([]);
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [submitted, setSubmitted] = useState(false);
 
-  // Sample dummy multiple-choice questions
   const dummyQuestions = [
     {
       id: 1,
@@ -48,33 +47,35 @@ function ExamPage() {
   return (
     <Layout>
       <div>
-      <h1>Exam Page</h1>
-      <h2>Exam {examId} Questions</h2>
-      <form>
-        {questions.map((question) => (
-          <div key={question.id}>
-            <p>{question.text}</p>
-            {question.choices.map((choice, index) => (
-              <div key={index}>
-                <input
-                  type="radio"
-                  name={`question-${question.id}`}
-                  value={choice}
-                  checked={selectedAnswers[question.id] === choice}
-                  onChange={() => handleAnswerChange(question.id, choice)}
-                />
-                <label>{choice}</label>
-              </div>
-            ))}
-          </div>
-        ))}
-      </form>
-      {submitted ? (
-        <p>Answers submitted. Display score or feedback here.</p>
-      ) : (
-        <button onClick={handleSubmission}>Submit Answers</button>
-      )}
-    </div>
+        <h3>Exam {examId} Questions</h3>
+        <form>
+          {questions.map((question) => (
+            <Card key={question.id} style={{ marginBottom: '20px' }}> {/* Add margin-bottom */}
+              <Card.Body>
+                <Card.Title>Question {question.id}</Card.Title>
+                <Card.Text>{question.text}</Card.Text>
+                {question.choices.map((choice, index) => (
+                  <div key={index}>
+                    <input
+                      type="radio"
+                      name={`question-${question.id}`}
+                      value={choice}
+                      checked={selectedAnswers[question.id] === choice}
+                      onChange={() => handleAnswerChange(question.id, choice)}
+                    />
+                    <label>{choice}</label>
+                  </div>
+                ))}
+              </Card.Body>
+            </Card>
+          ))}
+        </form>
+        {submitted ? (
+          <p>Answers submitted. Display score or feedback here.</p>
+        ) : (
+          <button onClick={handleSubmission}>Submit Answers</button>
+        )}
+      </div>
     </Layout>
   );
 }
