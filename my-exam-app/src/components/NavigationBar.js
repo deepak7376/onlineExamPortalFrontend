@@ -17,8 +17,16 @@ function NavigationBar() {
         <Navbar.Toggle aria-controls="navbarSupportedContent" />
         <Navbar.Collapse id="navbarSupportedContent">
           <Nav className="me-auto">
-            <Nav.Link href="/explore">Explore</Nav.Link>
-            <Nav.Link href="#">Problems</Nav.Link>
+            {/* <Nav.Link href="/explore">Explore</Nav.Link> */}
+            <NavDropdown title="Explore" id="explore-nav-dropdown">
+              <NavDropdown.Item href="/explore/exams/SSC">SSC</NavDropdown.Item>
+              <NavDropdown.Item href="/explore/exams/GATE">GATE</NavDropdown.Item>
+              <NavDropdown.Item href="/explore/exams/CAT">CAT</NavDropdown.Item>
+              <NavDropdown.Item href="/explore/exams/Other">Other</NavDropdown.Item>
+              {/* <NavDropdown.Divider />
+              <NavDropdown.Item href="#action/3.3">Something else here</NavDropdown.Item> */}
+            </NavDropdown>
+            {/* <Nav.Link href="#">Problems</Nav.Link> */}
             <NavDropdown title="Interview" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>

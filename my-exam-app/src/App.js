@@ -4,21 +4,19 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import SignUp from './components/SignUp';
 import Login from './components/Login';
 import Home from './components/Home';
-import Explore from './components/Explore';
-import ExamPage from './components/ExamPage';
+import ExamDetails from './components/ExamDetails';
+import TestDetail from './components/TestDetail';
 
 function App() {
   return (
     <Router>
       <div className="App">
-        {/* Other components/routes */}
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/explore" element={<Explore />} />
-          <Route path="/explore/exam/:examId" element={<ExamPage />} /> {/* Dynamic route for the exam page */}
+          <Route path="/explore/exams/:examId" element={<ExamDetails />} /> 
+          <Route path="/explore/exams/:examId/tests/:testId" element={<TestDetail />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
-          {/* Other routes */}
         </Routes>
       </div>
     </Router>

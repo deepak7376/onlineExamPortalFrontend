@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import Layout from './Layout';
 import Card from 'react-bootstrap/Card';
 
-function ExamPage() {
+function TestDetail() {
   const { examId } = useParams();
   const [questions, setQuestions] = useState([]);
   const [selectedAnswers, setSelectedAnswers] = useState({});
@@ -80,4 +80,4 @@ function ExamPage() {
   );
 }
 
-export default ExamPage;
+export default TestDetail;
