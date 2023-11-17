@@ -1,34 +1,34 @@
+// TestDetail.js
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams} from 'react-router-dom';
 import Layout from './Layout';
-import Card from 'react-bootstrap/Card';
+import axios from 'axios';
+import Question from './Question';
+import ResultPage from './ResultPage';
 
 function TestDetail() {
   const { examId } = useParams();
   const [questions, setQuestions] = useState([]);
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [submitted, setSubmitted] = useState(false);
-
-  const dummyQuestions = [
-    {
-      id: 1,
-      text: 'What is the capital of France?',
-      choices: ['Paris', 'London', 'Berlin', 'Madrid'],
-      correctAnswer: 'Paris',
-    },
-    {
-      id: 2,
-      text: 'Who wrote the play "Hamlet"?',
-      choices: ['William Shakespeare', 'Charles Dickens', 'Jane Austen', 'George Orwell'],
-      correctAnswer: 'William Shakespeare',
-    },
-  ];
+  const [score, setScore] = useState(0);
+  // const navigate = useNavigate();
 
   useEffect(() => {
-    // In a real application, you would fetch questions from your backend based on the examId.
-    // For this example, we'll use the sample dummy questions.
-    setQuestions(dummyQuestions);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    axios.get(`http://127.0.0.1:8000/api/questions/?exam_id=${examId}`)
+      .then((response) => {
+        console.log(response.data);
+        const parsedQuestions = response.data.map((question) => ({
+          id: question.id,
+          text: question.question_text,
+          choices: JSON.parse(question.option_text.replace(/'/g, '"')),
+          correctAnswer: question.correct_answer.replace(/'/g, ''),
+        }));
+        setQuestions(parsedQuestions);
+      })
+      .catch((error) => {
+        console.error('Error fetching exam data:', error);
+      });
   }, [examId]);
 
   const handleAnswerChange = (questionId, selectedChoice) => {
@@ -38,42 +38,69 @@ function TestDetail() {
     });
   };
 
-  const handleSubmission = () => {
-    // Implement your submission logic here.
-    // You can compare selected answers with correct answers and calculate the score.
+  const handleSubmission = async () => {
+    // Calculate the score
+    const calculatedScore = Object.keys(selectedAnswers).reduce((totalScore, questionId) => {
+      const selectedChoice = selectedAnswers[questionId];
+      const correctAnswer = questions.find((question) => question.id === parseInt(questionId, 10)).correctAnswer;
+  
+      if (selectedChoice === correctAnswer) {
+        return totalScore + 1;
+      }
+  
+      return totalScore;
+    }, 0);
+  
+    setScore(calculatedScore);
     setSubmitted(true);
+  
+    // Prepare data for the POST request
+    const postData = {
+      user: 1,  // Replace with the actual user ID
+      exam: examId,  // Replace with the actual exam ID
+      start_time: null,
+      end_time: null,
+      status_name: 'completed',  // Assuming the default status is 'completed' after submission
+      score: calculatedScore,
+    };
+  
+    try {
+      // Make the POST request
+      const response = await axios.post('http://127.0.0.1:8000/api/user-exam-relations/', postData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log('POST request successful:', response.data);
+    } catch (error) {
+      console.error('Error making POST request:', error);
+    }
   };
+  
+
+  // const goToResultPage = () => {
+  //   navigate(`/result/${examId}`);
+  // };
 
   return (
     <Layout>
       <div>
-        <h3>Exam {examId} Questions</h3>
-        <form>
-          {questions.map((question) => (
-            <Card key={question.id} style={{ marginBottom: '20px' }}> {/* Add margin-bottom */}
-              <Card.Body>
-                <Card.Title>Question {question.id}</Card.Title>
-                <Card.Text>{question.text}</Card.Text>
-                {question.choices.map((choice, index) => (
-                  <div key={index}>
-                    <input
-                      type="radio"
-                      name={`question-${question.id}`}
-                      value={choice}
-                      checked={selectedAnswers[question.id] === choice}
-                      onChange={() => handleAnswerChange(question.id, choice)}
-                    />
-                    <label>{choice}</label>
-                  </div>
-                ))}
-              </Card.Body>
-            </Card>
-          ))}
-        </form>
         {submitted ? (
-          <p>Answers submitted. Display score or feedback here.</p>
+          <ResultPage score={score} questions={questions} />
         ) : (
-          <button onClick={handleSubmission}>Submit Answers</button>
+          <form>
+            {questions.map((question) => (
+              <Question
+                key={question.id}
+                question={question}
+                selectedAnswer={selectedAnswers[question.id] || ''}
+                onAnswerChange={handleAnswerChange}
+              />
+            ))}
+            <button type="button" onClick={handleSubmission}>
+              Submit Answers
+            </button>
+          </form>
         )}
       </div>
     </Layout>
